@@ -1,6 +1,7 @@
 package lazybot
 
 import (
+	"errors"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/lowl11/lazytg/message"
 	"log"
@@ -15,6 +16,10 @@ func (bot *Bot) SetChatID(chatID int) {
 }
 
 func (bot *Bot) Send(message string) error {
+	if bot.chatID == 0 {
+		return errors.New("chat ID is empty")
+	}
+
 	return bot.sendMessage(message, bot.chatID)
 }
 
@@ -50,4 +55,8 @@ func (bot *Bot) RunAnswer(getMessageFunc func(ctx message.IContext) string, time
 			}
 		}
 	}
+}
+
+func (bot *Bot) RunAnswerAsync(getMessageFunc func(ctx message.IContext) string, timeoutInSeconds int) {
+	go bot.RunAnswer(getMessageFunc, timeoutInSeconds)
 }

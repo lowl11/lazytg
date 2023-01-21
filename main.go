@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"github.com/lowl11/lazytg/message"
 	"github.com/lowl11/lazytg/tgapi"
 	"log"
 )
@@ -20,11 +19,11 @@ func main() {
 
 	bot.ProductionMode()
 
-	bot.RunAnswer(func(ctx message.IContext) string {
-		fmt.Println("chat id:", ctx.Message().ChatID)
-
-		return ctx.Message().Text + ". this is answer!!!"
-	}, 60)
+	//bot.RunAnswer(func(ctx message.IContext) string {
+	//	fmt.Println("chat id:", ctx.Message().ChatID)
+	//
+	//	return ctx.Message().Text + ". this is answer!!!"
+	//}, 60)
 
 	fmt.Println("hello world")
 
