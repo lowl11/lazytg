@@ -3,4 +3,5 @@
 *.log
 logs
 main
+main.go
 app
