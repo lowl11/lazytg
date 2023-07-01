@@ -3,7 +3,7 @@ package lazybot
 import (
 	"errors"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
-	"github.com/lowl11/lazytg/message"
+	message2 "github.com/lowl11/lazytg/internal/message"
 	"log"
 )
 
@@ -27,7 +27,7 @@ func (bot *Bot) SendChat(message string, chatID int) error {
 	return bot.sendMessage(message, int64(chatID))
 }
 
-func (bot *Bot) RunAnswer(getMessageFunc func(ctx message.IContext) string, timeoutInSeconds int) {
+func (bot *Bot) RunAnswer(getMessageFunc func(ctx message2.IContext) string, timeoutInSeconds int) {
 	updateConfig := tgbotapi.NewUpdate(0)
 	updateConfig.Timeout = timeoutInSeconds
 
@@ -35,12 +35,12 @@ func (bot *Bot) RunAnswer(getMessageFunc func(ctx message.IContext) string, time
 
 	for update := range updates {
 		if update.Message != nil {
-			gotMessage := getMessageFunc(message.CreateContext(
-				&message.Message{
+			gotMessage := getMessageFunc(message2.NewContext(
+				&message2.Message{
 					Text:   update.Message.Text,
 					ChatID: update.Message.Chat.ID,
 				},
-				&message.Author{
+				&message2.Author{
 					Username:  update.Message.From.UserName,
 					LastName:  update.Message.From.LastName,
 					FirstName: update.Message.From.FirstName,
@@ -57,6 +57,6 @@ func (bot *Bot) RunAnswer(getMessageFunc func(ctx message.IContext) string, time
 	}
 }
 
-func (bot *Bot) RunAnswerAsync(getMessageFunc func(ctx message.IContext) string, timeoutInSeconds int) {
+func (bot *Bot) RunAnswerAsync(getMessageFunc func(ctx message2.IContext) string, timeoutInSeconds int) {
 	go bot.RunAnswer(getMessageFunc, timeoutInSeconds)
 }

@@ -13,7 +13,7 @@ type Bot struct {
 	name     string
 }
 
-func Create(token string) (*Bot, error) {
+func New(token string) (*Bot, error) {
 	connection, err := tgbotapi.NewBotAPI(token)
 	if err != nil {
 		return nil, err

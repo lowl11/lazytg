@@ -10,7 +10,7 @@ type TelegramContext struct {
 	author  *Author
 }
 
-func CreateContext(message *Message, author *Author) IContext {
+func NewContext(message *Message, author *Author) IContext {
 	return &TelegramContext{
 		message: message,
 		author:  author,
