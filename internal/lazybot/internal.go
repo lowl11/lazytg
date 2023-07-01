@@ -12,3 +12,19 @@ func (bot *Bot) sendMessage(message string, chatID int64) error {
 
 	return nil
 }
+
+func (bot *Bot) lock() {
+	if !bot.threadSafe {
+		return
+	}
+
+	bot.mutex.Lock()
+}
+
+func (bot *Bot) unlock() {
+	if !bot.threadSafe {
+		return
+	}
+
+	bot.mutex.Unlock()
+}

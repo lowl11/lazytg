@@ -2,6 +2,7 @@ package lazybot
 
 import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
+	"sync"
 )
 
 type Bot struct {
@@ -11,6 +12,9 @@ type Bot struct {
 
 	username string
 	name     string
+
+	threadSafe bool
+	mutex      sync.Mutex
 }
 
 func New(token string) (*Bot, error) {
