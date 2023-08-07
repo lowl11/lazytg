@@ -4,20 +4,21 @@ import (
 	"errors"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/lowl11/lazytg/internal/message"
+	"github.com/lowl11/lazytg/pkg/interfaces"
 	"log"
 )
 
-func (bot *Bot) ProductionMode() *Bot {
+func (bot *Bot) ProductionMode() interfaces.Bot {
 	bot.connection.Debug = false
 	return bot
 }
 
-func (bot *Bot) ThreadSafe() *Bot {
+func (bot *Bot) ThreadSafe() interfaces.Bot {
 	bot.threadSafe = true
 	return bot
 }
 
-func (bot *Bot) SetChatID(chatID int) *Bot {
+func (bot *Bot) SetChatID(chatID int) interfaces.Bot {
 	bot.chatID = int64(chatID)
 	return bot
 }
@@ -39,7 +40,7 @@ func (bot *Bot) SendChat(message string, chatID int) error {
 	return bot.sendMessage(message, int64(chatID))
 }
 
-func (bot *Bot) RunAnswer(getMessageFunc func(ctx message.IContext) string, timeoutInSeconds int) *Bot {
+func (bot *Bot) RunAnswer(getMessageFunc func(ctx message.IContext) string, timeoutInSeconds int) interfaces.Bot {
 	updateConfig := tgbotapi.NewUpdate(0)
 	updateConfig.Timeout = timeoutInSeconds
 
@@ -71,7 +72,7 @@ func (bot *Bot) RunAnswer(getMessageFunc func(ctx message.IContext) string, time
 	return bot
 }
 
-func (bot *Bot) RunAnswerAsync(getMessageFunc func(ctx message.IContext) string, timeoutInSeconds int) *Bot {
+func (bot *Bot) RunAnswerAsync(getMessageFunc func(ctx message.IContext) string, timeoutInSeconds int) interfaces.Bot {
 	go bot.RunAnswer(getMessageFunc, timeoutInSeconds)
 	return bot
 }
