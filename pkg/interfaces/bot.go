@@ -1,6 +1,8 @@
 package interfaces
 
-import "github.com/lowl11/lazytg/internal/message"
+import (
+	"github.com/lowl11/lazytg/pkg/message"
+)
 
 type Bot interface {
 	ProductionMode() Bot
